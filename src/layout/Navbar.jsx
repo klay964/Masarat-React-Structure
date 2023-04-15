@@ -16,14 +16,14 @@ export default function Navbar() {
       <div>LOGO</div>
       <nav className='hidden md:flex'>
         {links.map((link, i) => (
-          <Link className='mx-2 md:block text-sm' to={link.link}>
+          <Link key={i} className='mx-2 md:block text-sm' to={link.link}>
             {link.name}
           </Link>
         ))}
         <button
           type='button'
           onClick={() => setIsDark(!isDark)}
-          class='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  rounded-lg text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  rounded-lg text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
         >
           Default
         </button>
