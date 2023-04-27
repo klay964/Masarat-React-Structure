@@ -1,20 +1,23 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ProductsList from '../components/products/ProductsList';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const [count, setCount] = useState(0);
+
+  const ref = useRef(0);
+
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_KEY}products`).then((response) => {
-      setProducts(response.data);
-    });
-  }, []);
+    ref.current++;
+  });
   return (
     <>
-      <h1 className='text-center text-blue-400'>Our Products</h1>
-      <div className='flex flex-wrap justify-center gap-3'>
-        {products.length > 0 && <ProductsList products={products} />}
-      </div>
+      <div>component render {ref.current} times</div>
+      <button
+        className='bg-red-400 border-2 rounded px-3'
+        onClick={() => setCount((prevCount) => prevCount + 1)}
+      >
+        click
+      </button>
+      <div> this is count {count}</div>
     </>
   );
 }

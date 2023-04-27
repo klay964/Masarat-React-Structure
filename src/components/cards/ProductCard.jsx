@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function ProductCard({ product }) {
   return (
     <>
@@ -77,6 +79,12 @@ export default function ProductCard({ product }) {
               {product.price}$
             </span>
           </div>
+          <Link
+            className='bg-red-200 border rounded p-2 hover:bg-red-500'
+            to={`/products/${product.id}`}
+          >
+            Detalis
+          </Link>
         </div>
       </div>
     </>
