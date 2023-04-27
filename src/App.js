@@ -18,7 +18,6 @@ function App() {
             <Route path=':id' element={<ProductDetails />} />
             <Route path='template' element={<ProductsTemplate />} />
           </Route>
-
           <Route path='/categories' element={<Categories />} />
         </Routes>
       </Layout>

@@ -1,23 +1,37 @@
-import { useState, useEffect, useRef } from 'react';
+import { useReducer } from 'react';
 
 export default function Home() {
-  const [count, setCount] = useState(0);
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'increamnet':
+        return { count: state.count + 1 };
 
-  const ref = useRef(0);
+      case 'decremnt':
+        return { count: state.count - 1 };
 
-  useEffect(() => {
-    ref.current++;
-  });
+      default:
+        return state;
+    }
+  }
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
   return (
     <>
-      <div>component render {ref.current} times</div>
       <button
         className='bg-red-400 border-2 rounded px-3'
-        onClick={() => setCount((prevCount) => prevCount + 1)}
+        onClick={() => {
+          dispatch({ type: 'increamnet' });
+        }}
       >
-        click
+        Increment
       </button>
-      <div> this is count {count}</div>
+      <button
+        className='bg-red-400 border-2 rounded px-3'
+        onClick={() => dispatch({ type: 'decremnt' })}
+      >
+        decrement
+      </button>
+      <div> this is count {state.count}</div>
     </>
   );
 }
