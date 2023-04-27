@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductsList from '../components/products/ProductsList';
+import { useOutletContext } from 'react-router-dom';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
