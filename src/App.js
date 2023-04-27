@@ -6,21 +6,24 @@ import Categories from './pages/Categories';
 import ProductDetails from './pages/ProductDetalis';
 import ProductsTemplate from './pages/ProductsTemplates';
 import ProductsLayout from './layout/ProductsLayout';
+import { ProductsProvider } from './store';
 
 function App() {
   return (
     <>
-      <Layout>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path='/products' element={<ProductsLayout />}>
-            <Route index element={<Products />} />
-            <Route path=':id' element={<ProductDetails />} />
-            <Route path='template' element={<ProductsTemplate />} />
-          </Route>
-          <Route path='/categories' element={<Categories />} />
-        </Routes>
-      </Layout>
+      <ProductsProvider>
+        <Layout>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='/products' element={<ProductsLayout />}>
+              <Route index element={<Products />} />
+              <Route path=':id' element={<ProductDetails />} />
+              <Route path='template' element={<ProductsTemplate />} />
+            </Route>
+            <Route path='/categories' element={<Categories />} />
+          </Routes>
+        </Layout>
+      </ProductsProvider>
     </>
   );
 }

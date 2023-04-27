@@ -1,6 +1,9 @@
-import { useReducer } from 'react';
+import { useReducer, useContext } from 'react';
+import Context from '../store';
 
 export default function Home() {
+  const products = useContext(Context);
+
   function reducer(state, action) {
     switch (action.type) {
       case 'increamnet':
@@ -14,6 +17,7 @@ export default function Home() {
     }
   }
   const [state, dispatch] = useReducer(reducer, { count: 0 });
+  console.log('Products in Home Page', products);
 
   return (
     <>
