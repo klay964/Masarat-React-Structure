@@ -8,6 +8,7 @@ import ProductsTemplate from './pages/ProductsTemplates';
 import ProductsLayout from './layout/ProductsLayout';
 import { ProductsProvider } from './store';
 import Login from './pages/Login';
+import ProtectedRoutes from './routes/ProtectedRoutes';
 
 function App() {
   return (
@@ -15,14 +16,16 @@ function App() {
       <ProductsProvider>
         <Routes>
           <Route path='/login' element={<Login />} />
-          <Route element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='/products' element={<ProductsLayout />}>
-              <Route index element={<Products />} />
-              <Route path=':id' element={<ProductDetails />} />
-              <Route path='template' element={<ProductsTemplate />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path='/products' element={<ProductsLayout />}>
+                <Route index element={<Products />} />
+                <Route path=':id' element={<ProductDetails />} />
+                <Route path='template' element={<ProductsTemplate />} />
+              </Route>
+              <Route path='/categories' element={<Categories />} />
             </Route>
-            <Route path='/categories' element={<Categories />} />
           </Route>
         </Routes>
       </ProductsProvider>

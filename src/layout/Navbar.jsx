@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { links } from '../utils/data';
 import BurgerMenu from '../assets/menu.png';
 import { useState } from 'react';
 
 export default function Navbar() {
-  const [isDark, setIsDark] = useState(false);
-  const [error, setError] = useState(false);
+  const [error] = useState(false);
+  const naviagte = useNavigate();
 
   return (
     <header
@@ -22,10 +22,13 @@ export default function Navbar() {
         ))}
         <button
           type='button'
-          onClick={() => setIsDark(!isDark)}
-          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  rounded-lg text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+          onClick={() => {
+            localStorage.removeItem('token');
+            naviagte('/login');
+          }}
+          className='text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  rounded-lg text-xs px-2 py-1 mr-2 mb-2 '
         >
-          Default
+          Logout
         </button>
       </nav>
       <img
