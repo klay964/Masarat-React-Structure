@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { links } from '../utils/data';
 import BurgerMenu from '../assets/menu.png';
 import { useState } from 'react';
+import { Button } from '@mui/material';
 
 export default function Navbar() {
   const [error] = useState(false);
@@ -20,16 +21,18 @@ export default function Navbar() {
             {link.name}
           </Link>
         ))}
-        <button
+        <Button
+          variant='contained'
+          size='small'
+          color='success'
           type='button'
           onClick={() => {
             localStorage.removeItem('token');
             naviagte('/login');
           }}
-          className='text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  rounded-lg text-xs px-2 py-1 mr-2 mb-2 '
         >
           Logout
-        </button>
+        </Button>
       </nav>
       <img
         className='block md:hidden'
