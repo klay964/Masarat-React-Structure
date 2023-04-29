@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function ProductCard({ product }) {
   return (
     <>
       <div className='text-center text-sm w-60 bg-white border border-gray-200 rounded-lg shadow :bg-gray-800 :border-gray-700'>
         <a className='flex justify-center' href='/'>
-          <img
+          <LazyLoadImage
+            effect='blur'
             className='p-3 rounded-t-lg'
-            src={product.image}
+            alt='product'
             width={100}
             height={100}
-            alt='product'
+            src={product.image}
           />
         </a>
         <div className='px-2 pb-5'>
