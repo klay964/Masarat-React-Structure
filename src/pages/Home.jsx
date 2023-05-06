@@ -1,41 +1,75 @@
-import { useReducer, useContext } from 'react';
-import Context from '../store';
+import { useState, useEffect } from 'react';
+import { db } from '../firebase';
+import {
+  collection,
+  query,
+  onSnapshot,
+  addDoc,
+  updateDoc,
+} from 'firebase/firestore';
 
 export default function Home() {
-  const products = useContext(Context);
+  const [tasks, setTasks] = useState([]);
+  const [name, setName] = useState([]);
+  const [task, setTask] = useState([]);
 
-  function reducer(state, action) {
-    switch (action.type) {
-      case 'increamnet':
-        return { count: state.count + 1 };
+  useEffect(() => {
+    const q = query(collection(db, 'tasks'));
+    onSnapshot(q, (querySnapshot) => {
+      setTasks(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+      );
+    });
+  }, []);
 
-      case 'decremnt':
-        return { count: state.count - 1 };
-
-      default:
-        return state;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateDoc(collection(db, 'tasks'), {
+        name: name,
+        task: task,
+      });
+    } catch (err) {
+      alert(err);
     }
-  }
-  const [state, dispatch] = useReducer(reducer, { count: 0 });
-  console.log('Products in Home Page', products);
+  };
 
   return (
     <>
-      <button
-        className='bg-red-400 border-2 rounded px-3'
-        onClick={() => {
-          dispatch({ type: 'increamnet' });
-        }}
-      >
-        Increment
+      <h1>tasks</h1>
+      <label>Name</label>
+      <input
+        className='border-2 border-red-400'
+        type='text'
+        name='name'
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <label>Task</label>
+
+      <input
+        type='text'
+        className='border-2 border-red-400'
+        name='task'
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+      />
+
+      {tasks.map((task) => (
+        <div className='bg-red-200 my-3'>
+          <ul>
+            <li>Name:{task.name}</li>
+            <li>Task:{task.task}</li>
+          </ul>
+        </div>
+      ))}
+
+      <button className='bg-blue-500 p-3 block' onClick={handleSubmit}>
+        add task
       </button>
-      <button
-        className='bg-red-400 border-2 rounded px-3'
-        onClick={() => dispatch({ type: 'decremnt' })}
-      >
-        decrement
-      </button>
-      <div> this is count {state.count}</div>
     </>
   );
 }
