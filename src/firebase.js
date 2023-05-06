@@ -2,12 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCzL4ku2ciBeOobXhAkATfhQdTQ-cBeCgs',
-  authDomain: 'todo-appli-c231b.firebaseapp.com',
-  projectId: 'todo-appli-c231b',
-  storageBucket: 'todo-appli-c231b.appspot.com',
-  messagingSenderId: '663374326175',
-  appId: '1:663374326175:web:4f6cde291828fa0c56b5aa',
+  apiKey: 'AIzaSyC8hhumlPVpx0WHCCiuH4BDjwsLWVDYbH4',
+  authDomain: 'todo-fbab6.firebaseapp.com',
+  projectId: 'todo-fbab6',
+  storageBucket: 'todo-fbab6.appspot.com',
+  messagingSenderId: '513985988291',
+  appId: '1:513985988291:web:113692545e5847c8968476',
+  measurementId: 'G-YCWW6PCN3Y',
 };
 
 // Initialize Firebase
