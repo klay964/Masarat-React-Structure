@@ -3,6 +3,8 @@ import { links } from '../utils/data';
 import BurgerMenu from '../assets/menu.png';
 import { useState } from 'react';
 import { Button } from '@mui/material';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export default function Navbar() {
   const [error] = useState(false);
@@ -26,9 +28,15 @@ export default function Navbar() {
           size='small'
           color='success'
           type='button'
-          onClick={() => {
-            localStorage.removeItem('token');
-            naviagte('/login');
+          onClick={async () => {
+            await signOut(auth)
+              .then(() => {
+                localStorage.removeItem('token');
+                naviagte('/login');
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }}
         >
           Logout

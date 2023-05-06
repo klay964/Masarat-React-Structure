@@ -5,6 +5,7 @@ import ProductsLayout from './layout/ProductsLayout';
 import { ProductsProvider } from './store';
 import ProtectedRoutes from './routes/ProtectedRoutes';
 import Loading from './components/common/Loading';
+import SignUp from './pages/SignUp';
 
 const Home = lazy(() => import('./pages/Home'));
 const Products = lazy(() => import('./pages/Products'));
@@ -20,6 +21,8 @@ function App() {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<SignUp />} />
+
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                 <Route index element={<Home />} />

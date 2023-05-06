@@ -1,27 +1,23 @@
-import {
-  sendEmailVerification,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-export default function Login() {
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
+
+export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const naviagte = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signInWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCreditals) => {
         const user = userCreditals.user;
-        if (user.emailVerified) {
-          console.log(user);
-          localStorage.setItem('token', user.accessToken);
-          naviagte('/');
-        } else {
-          alert('you need to verify your email');
-          sendEmailVerification(user);
-        }
+        sendEmailVerification(user);
+        alert('we sent u email please verify ur email address');
+        naviagte('/login');
       })
       .catch((error) => {
         console.log(error);
@@ -32,7 +28,7 @@ export default function Login() {
     <div className='flex justify-center items-center h-screen bg-blue-400'>
       <div className='w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 '>
         <form className='space-y-6' onSubmit={handleSubmit}>
-          <h5 className='text-xl font-medium text-gray-900'>Log in</h5>
+          <h5 className='text-xl font-medium text-gray-900'>Sign Up</h5>
           <div>
             <label
               for='email'
@@ -74,7 +70,7 @@ export default function Login() {
             type='submit'
             className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
           >
-            Login to your account
+            SignUp{' '}
           </button>
         </form>
       </div>

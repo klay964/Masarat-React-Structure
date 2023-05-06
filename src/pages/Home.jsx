@@ -6,12 +6,13 @@ import {
   onSnapshot,
   addDoc,
   updateDoc,
+  doc,
 } from 'firebase/firestore';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [name, setName] = useState([]);
-  const [task, setTask] = useState([]);
+  const [phone, setPhone] = useState([]);
 
   useEffect(() => {
     const q = query(collection(db, 'tasks'));
@@ -28,9 +29,9 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateDoc(collection(db, 'tasks'), {
-        name: name,
-        task: task,
+      await addDoc(collection(db, 'tasks'), {
+        name,
+        phone,
       });
     } catch (err) {
       alert(err);
@@ -54,8 +55,8 @@ export default function Home() {
         type='text'
         className='border-2 border-red-400'
         name='task'
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
       />
 
       {tasks.map((task) => (
