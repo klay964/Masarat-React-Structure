@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
-import {
-  collection,
-  query,
-  onSnapshot,
-  addDoc,
-  updateDoc,
-  doc,
-} from 'firebase/firestore';
+import { db, storage } from '../firebase';
+import { collection, query, onSnapshot, addDoc } from 'firebase/firestore';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [name, setName] = useState([]);
   const [phone, setPhone] = useState([]);
+  const [image, setImage] = useState('');
 
   useEffect(() => {
     const q = query(collection(db, 'tasks'));
@@ -29,10 +24,25 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'tasks'), {
-        name,
-        phone,
-      });
+      const storageRef = ref(storage, `images/${image.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          alert(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            addDoc(collection(db, 'tasks'), {
+              name,
+              phone,
+              image: downloadURL,
+            });
+          });
+        }
+      );
     } catch (err) {
       alert(err);
     }
@@ -58,12 +68,18 @@ export default function Home() {
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />
+      <input
+        type='file'
+        className='border-2 border-red-400'
+        onChange={(e) => setImage(e.target.files[0])}
+      />
 
       {tasks.map((task) => (
         <div className='bg-red-200 my-3'>
           <ul>
             <li>Name:{task.name}</li>
             <li>Task:{task.task}</li>
+            <img src={task.image} alt='task' width={50} height={50} />
           </ul>
         </div>
       ))}
